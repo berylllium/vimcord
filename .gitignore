@@ -1,0 +1,6 @@
+build/
+
+assets/client_info.json
+
+.ccls-cache/
+.nvim/

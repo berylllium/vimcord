@@ -1,0 +1,3 @@
+[submodule "deps/restclient-cpp"]
+	path = deps/restclient-cpp
+	url = https://github.com/berylllium/restclient-cpp.git

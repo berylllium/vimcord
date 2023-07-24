@@ -1,0 +1,3 @@
+{
+	"discord_oauth2_url": "https://discord.com/api/oauth2/authorize?client_id=1132053193044529292&redirect_uri=http%3A%2F%2Flocalhost%3A8135%2Fvimcord%2Fredirect&response_type=code&scope=identify%20guilds%20messages.read"
+}
