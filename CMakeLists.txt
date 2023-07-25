@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.21)
 project(vimcord)
 
 add_subdirectory(deps/restclient-cpp)
+add_subdirectory(deps/simple-logger)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_BUILD_TYPE Debug)
@@ -29,7 +30,7 @@ if(wxWidgets_USE_FILE) # not defined in CONFIG mode
 	include(${wxWidgets_USE_FILE})
 endif()
 
-target_link_libraries(vimcord ${wxWidgets_LIBRARIES} restclient-cpp)
+target_link_libraries(vimcord ${wxWidgets_LIBRARIES} restclient-cpp simple-logger)
 
 if(WIN32)
 	target_compile_definitions(vimcord PUBLIC V_ISWIN)

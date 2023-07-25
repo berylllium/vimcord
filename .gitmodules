@@ -1,3 +1,6 @@
 [submodule "deps/restclient-cpp"]
 	path = deps/restclient-cpp
 	url = https://github.com/berylllium/restclient-cpp.git
+[submodule "deps/simple-logger"]
+	path = deps/simple-logger
+	url = https://github.com/berylllium/simple-logger.git
