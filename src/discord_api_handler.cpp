@@ -1,9 +1,8 @@
 #include "discord_api_handler.hpp"
 
-#include <iostream>
-
 #include <format>
 
+#include <simple-logger.hpp>
 #include <restclient-cpp/connection.h>
 #include <restclient-cpp/restclient.h>
 
@@ -97,7 +96,7 @@ std::string discord_api_request_access_code()
 
 	std::string url = config["discord_oauth2_url"].get<std::string>();
 
-	std::cout << url << std::endl;
+	sl::log_info("[DiscordApiHandler] Requesting OAuth2 access code using OAuth2 url `{}`...", url);
 
 	platform_open_default_browser(url);
 

@@ -3,7 +3,8 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include <iostream>
+
+#include <simple-logger.hpp>
 
 #include "filesystem.hpp"
 
@@ -14,12 +15,15 @@ static std::string HTTP_HEADER = "HTTP/1.1 200 OK\r\n\n";
 
 std::string http_server_listen_for_access_code()
 {
+	sl::log_info("[HttpServer] Listening for OAuth2 access code on port `{}`...", PORT);
+
 	int server_fd;
 	struct sockaddr_in server_addr;
 
 	if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
-		return "Failed to make socket.";
+		sl::log_error("[HttpServer] Failed to make socket.");
+		return "";
 	}
 
 	// config socket
@@ -30,13 +34,15 @@ std::string http_server_listen_for_access_code()
 	// bind socket to port
 	if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0)
 	{
-		return "Failed to bind socket.";
+		sl::log_error("[HttpManager] Failed to bind to socket.");
+		return "";
 	}
 
 	// listen for connections
 	if (listen(server_fd, 10) < 0)
 	{
-		return "Failed to listen for connection.";
+		sl::log_error("[HttpManager] Failed to listen for connection.");
+		return "";
 	}
 
 	std::string request;
@@ -53,7 +59,7 @@ std::string http_server_listen_for_access_code()
 			continue;
 		}
 
-		std::cout << "Accepted client.\n";
+		sl::log_info("[HttpServer] Accepted client...");
 
 		char *buffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
 
@@ -62,9 +68,13 @@ std::string http_server_listen_for_access_code()
 
 		request = std::string(buffer, bytes_received);
 
+		sl::log_info("[HttpServer] Request received.");
+
 		std::string response = HTTP_HEADER + filesystem_read_whole_file("./assets/access_code_received.html");
 
 		send(client_fd, response.c_str(), response.length(), 0);
+		
+		sl::log_info("[HttpServer] Response sent.");
 
 		close(client_fd);
 
@@ -77,6 +87,8 @@ std::string http_server_listen_for_access_code()
 	// Parse the reply to get the access code.
 	size_t equalssign_pos = request.find('=');
 	size_t space_after_code_pos = request.find(' ', equalssign_pos);
+
+	sl::log_info("[HttpServer] Successfully received access code.");
 
 	return request.substr(equalssign_pos + 1, space_after_code_pos - 1 - equalssign_pos);
 }

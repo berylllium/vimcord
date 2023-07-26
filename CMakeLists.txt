@@ -22,7 +22,7 @@ set(VIMCORD_SOURCE
 list(TRANSFORM VIMCORD_SOURCE PREPEND "src/")
 
 add_executable(vimcord ${VIMCORD_SOURCE})
-target_include_directories(vimcord PRIVATE src/ deps/restclient-cpp/include/ deps/json)
+target_include_directories(vimcord PRIVATE src/ deps/restclient-cpp/include/ deps/json deps/simple-logger/include)
 
 find_package(wxWidgets REQUIRED COMPONENTS net core base)
 
